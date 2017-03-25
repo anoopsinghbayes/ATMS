@@ -1,4 +1,4 @@
-# Hello World server
+# ATMS (A Transport Management System)
 
 The server that is used for the examples on dev.apollodata.com.
 

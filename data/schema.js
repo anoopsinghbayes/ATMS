@@ -1,4 +1,5 @@
 import { makeExecutableSchema } from 'graphql-tools';
+import { addressType } from './graphqlType';
 
 import resolvers from './resolvers';
 
@@ -37,6 +38,5 @@ type Subscription {
 `;
 
 export default makeExecutableSchema({
-  typeDefs: schema,
-  resolvers,
+  typeDefs: addressType
 });

@@ -21,8 +21,6 @@
   ],
   "author": "anoopsingh bayes,rohit rane",
   "license": "MIT",
-  
-  
   "dependencies": {
     "body-parser": "^1.15.2",
     "cors": "^2.8.0",
@@ -32,6 +30,9 @@
     "graphql-subscriptions": "^0.2.0",
     "graphql-tools": "^0.8.0",
     "lodash": "^4.15.0",
+    "mongoose": "^4.9.1",
+    "mongoose-auto-increment": "^5.0.1",
+    "mongoose-schema-to-graphql": "^2.4.6",
     "subscriptions-transport-ws": "^0.3.1"
   },
   "devDependencies": {

@@ -5,15 +5,21 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { printSchema } from 'graphql/utilities/schemaPrinter';
+var mongoose = require('mongoose');
 
 import { subscriptionManager } from './data/subscriptions';
 import schema from './data/schema';
+
+import { addressType } from './data/graphqlType';
 
 const GRAPHQL_PORT = 8080;
 const WS_PORT = 8090;
 
 const graphQLServer = express().use('*', cors());
 
+var db = mongoose.connect("mongodb://localhost:27017/test");
+
+console.log(schema);
 graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({
   schema,
   context: {},

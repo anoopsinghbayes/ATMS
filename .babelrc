@@ -5,6 +5,8 @@
     "es2015",
     "stage-0"
   ],
+  "sourceMaps": true,
+  "retainLines": true,
   "plugins": [
     "babel-plugin-inline-import"
   ]

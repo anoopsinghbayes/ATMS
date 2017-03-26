@@ -38,5 +38,5 @@ type Subscription {
 `;
 
 export default makeExecutableSchema({
-  typeDefs: addressType
+  typeDefs: schema
 });

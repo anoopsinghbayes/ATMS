@@ -1,5 +1,6 @@
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
+import {GraphQLSchema} from 'graphql'
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import { createServer } from 'http';
@@ -11,9 +12,10 @@ import { subscriptionManager } from './data/subscriptions';
 import schema from './data/schema';
 
 import { addressType } from './data/graphqlType';
-
+console.log('hi');
 const GRAPHQL_PORT = 8080;
 const WS_PORT = 8090;
+
 
 const graphQLServer = express().use('*', cors());
 

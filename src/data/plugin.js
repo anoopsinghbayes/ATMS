@@ -1,16 +1,16 @@
 
 module.exports = function lastModifiedPlugin(schema, options) {
   schema.methods.lazyPopulate = function (field) {
-    let ModelName = undefined;
-    for (var property in this.schema.obj) {
-      if (this.schema.obj.hasOwnProperty(property)  && property  == field && this.schema.obj[property].ref) {
-        ModelName = this.schema.obj[property].ref;
+    const Prm = new Promise((resolve, reject) => {
+      if (this.schema.obj[field] && this.schema.obj[field].ref) {
+        const ModelName = this.schema.obj[field].ref;
+        const Id = this[field];
+        resolve(this.model(ModelName).findById(Id).exec());
       }
-    }
-    if (!ModelName)
-      throw `model does not have ref filed ${field} please check the Schema`;
+      else
+        reject(`model does not have reference field ${field}, please check the Schema `);
 
-    var Id = this[field];
-    return this.model(ModelName).findById(Id).exec();
+    })
+    return Prm;
   };
 }

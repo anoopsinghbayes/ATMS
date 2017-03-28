@@ -15,20 +15,14 @@ var _graphqlType = require('./data/graphqlType');function _interopRequireDefault
 console.log('hi');
 var GRAPHQL_PORT = 8080;
 var WS_PORT = 8090;
-
-
 var graphQLServer = (0, _express2.default)().use('*', (0, _cors2.default)());
-
 var db = mongoose.connect("mongodb://localhost:27017/test");
-
 graphQLServer.use('/graphql', _bodyParser2.default.json(), (0, _graphqlServerExpress.graphqlExpress)({
   schema: _schema2.default,
   context: {} }));
 
-
 graphQLServer.use('/graphiql', (0, _graphqlServerExpress.graphiqlExpress)({
   endpointURL: '/graphql' }));
-
 
 graphQLServer.use('/schema', function (req, res) {
   res.set('Content-Type', 'text/plain');
@@ -44,6 +38,7 @@ var websocketServer = (0, _http.createServer)(function (request, response) {
   response.writeHead(404);
   response.end();
 });
+
 
 websocketServer.listen(WS_PORT, function () {return console.log( // eslint-disable-line no-console
   'Websocket Server is now running on http://localhost:' + WS_PORT);});

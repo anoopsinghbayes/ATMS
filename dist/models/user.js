@@ -21,6 +21,5 @@ var UserSchema = new _mongoose2.default.Schema({
     ref: 'User' }] });
 
 
-
 var User = exports.User = _mongoose2.default.model('User', UserSchema);
 //# sourceMappingURL=user.js.map

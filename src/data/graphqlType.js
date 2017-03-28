@@ -1,5 +1,5 @@
-import MTGQL from '../mtgql';
-//import MTGQL from 'mongoose-schema-to-graphql';
+//import MTGQL from '../mtgql';
+import MTGQL from 'mongoose-schema-to-graphql';
 import {customerSchema} from '../models/quiz';
 
 let configs = {
@@ -11,6 +11,6 @@ let configs = {
           }
           
 export let addressType = MTGQL(configs);
-console.log(addressType);
+
 
 

@@ -21,5 +21,4 @@ const UserSchema = new mongoose.Schema({
     ref: 'User'
   }]
 });
-
 export const User = mongoose.model('User', UserSchema);

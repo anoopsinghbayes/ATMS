@@ -1,5 +1,5 @@
 import { find, filter } from 'lodash';
-import { pubsub } from './subscriptions';
+import {Post,Author} from '../data/mongoose-test-data';
 
 const authors = [
   { id: 1, firstName: 'Tom', lastName: 'Coleman' },
@@ -14,37 +14,29 @@ const posts = [
 
 const resolveFunctions = {
   Query: {
-    posts() {
-      return posts;
+    posts(_,args) {
+      return Post.find();
     },
-    author(_, { id }) {
-      return find(authors, { id: id });
-    },
-  },
-  Mutation: {
-    upvotePost(_, { postId }) {
-      const post = find(posts, { id: postId });
-      if (!post) {
-        throw new Error(`Couldn't find post with id ${postId}`);
-      }
-      post.votes += 1;
-      pubsub.publish('postUpvoted', post);
-      return post;
-    },
-  },
-  Subscription: {
-    postUpvoted(post) {
-      return post;
+    author(_, args) {
+      return Author.find()
+      //post.populate('author').exec();
     },
   },
   Author: {
+    _id(author){
+      return author._id;
+    },
+    name(author){
+      return author.name;
+    },
     posts(author) {
-      return filter(posts, { authorId: author.id });
+     return author.lazyPopulate('post');
     },
   },
   Post: {
     author(post) {
-      return find(authors, { id: post.authorId });
+    return post.lazyPopulate('author');
+     // return find(authors, { id: post.authorId });
     },
   },
 };

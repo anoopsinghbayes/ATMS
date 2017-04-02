@@ -10,7 +10,7 @@
             "name": "Launch Program",
             "program": "${workspaceRoot}/src/server.js",
             "sourceMaps": true,
-            "outFiles": [ "${workspaceRoot}/dist/**/*.js" ]
+            "outFiles": [ "${workspaceRoot}/build/**/*.js" ]
         },
         {
             "type": "node",

@@ -6,9 +6,9 @@ import { createServer } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { printSchema } from 'graphql/utilities/schemaPrinter';
 var mongoose = require('mongoose');
-
+mongoose.set('debug', true);
 import { subscriptionManager } from './data/subscriptions';
-import schema from './data/schema';
+import schema from './src/models/address.schema';
 
 import { addressType } from './data/graphqlType';
 
@@ -21,7 +21,9 @@ var db = mongoose.connect("mongodb://localhost:27017/test");
 
 graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({
   schema,
-  context: {},
+  context: {
+    DB:"DB"
+  },
 }));
 
 graphQLServer.use('/graphiql', graphiqlExpress({

@@ -1,12 +1,13 @@
-var mongoose = require('mongoose');
-
-const Schema = mongoose.Schema;
-
-
+import mongoose,{Schema} from 'mongoose';
 
 var AddressSchema=new Schema({
 
-        adL1:{
+        adl1:{
+            type: String,
+
+            trim: true
+        },
+        adl2:{
             type: String,
 
             trim: true
@@ -49,5 +50,9 @@ var AddressSchema=new Schema({
         }
 });
 
-export let AddresSchema = AddressSchema;
-//mongoose.mtModel('Address',AddressSchema);
+let Address= mongoose.model('Address',AddressSchema);
+
+export{
+    AddressSchema,
+    Address
+}

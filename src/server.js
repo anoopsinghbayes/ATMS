@@ -18,7 +18,7 @@ const graphQLServer = express().use('*', cors());
 const DB_USER_NAME="admin";
 const DB_PASSWORD="admin";
 graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({
-  schema:tenantGqlSchemas['t0'],
+  schema:tenantGqlSchemas['t1'],
   context: {
     db:"db"
   },
@@ -28,7 +28,7 @@ graphQLServer.use('/graphiql', graphiqlExpress({
 }));
 graphQLServer.use('/schema', (req, res) => {
   res.set('Content-Type', 'text/plain');
-  res.send(printSchema(tenantGqlSchemas['t0']));
+  res.send(printSchema(tenantGqlSchemas['t1']));
 });
 
 graphQLServer.listen(GRAPHQL_PORT, () => console.log(

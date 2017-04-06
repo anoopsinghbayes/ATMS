@@ -6,7 +6,8 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { SubscriptionServer } from 'subscriptions-transport-ws';
 import { printSchema } from 'graphql/utilities/schemaPrinter';
-var mongoose = require('mongoose');
+import mongoose from 'mongoose';
+import {tenantGqlSchemas} from './connection';
 
 import { subscriptionManager } from './data/subscriptions';
 import  schema from './models/address.schema';
@@ -16,15 +17,8 @@ const WS_PORT = 8090;
 const graphQLServer = express().use('*', cors());
 const DB_USER_NAME="admin";
 const DB_PASSWORD="admin";
-var db = mongoose.connect(`mongodb://${DB_USER_NAME}:${DB_PASSWORD}@ds147510.mlab.com:47510/atms`);
-
-db.then(()=>{
-  console.log('connected');
-},(err)=>{
-  console.log(err);
-})
 graphQLServer.use('/graphql', bodyParser.json(), graphqlExpress({
-   schema,
+  schema:tenantGqlSchemas['t0'],
   context: {
     db:"db"
   },
@@ -34,7 +28,7 @@ graphQLServer.use('/graphiql', graphiqlExpress({
 }));
 graphQLServer.use('/schema', (req, res) => {
   res.set('Content-Type', 'text/plain');
-  res.send(printSchema( schema));
+  res.send(printSchema(tenantGqlSchemas['t0']));
 });
 
 graphQLServer.listen(GRAPHQL_PORT, () => console.log(

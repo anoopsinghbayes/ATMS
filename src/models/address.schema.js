@@ -24,13 +24,13 @@ const EmployeeTC = composeWithMongoose(Employee);
 const BusinessPartnerTC = composeWithMongoose(BusinessPartner);
 const ff = findMany(Customer, CustomerTC)
 CustomerTC.addRelation(
-    'acc',
+    'address',
     () => ({
         resolver: AddressTC.getResolver('findByIds'),
         args: { // resolver `findByIds` has `_ids` arg, let provide value to it
-            _ids: (source) => source.address,
+            _ids: (source) => source.addressIds,
         },
-        projection: { address: 1 }, // point fields in source object, which should be fetched from DB
+        projection: { addressIds: 1 }, // point fields in source object, which should be fetched from DB
     })
 );
 

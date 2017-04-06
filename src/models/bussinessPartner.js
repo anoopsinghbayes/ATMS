@@ -47,7 +47,7 @@ let BusinessPartnerSchema = new Schema({
         default: Date.now
     },
 
-    address: [AddressSchema],
+    addressIds: [{ type: Schema.Types.ObjectId, ref: 'Address' }],
     user: {
         type: String
     }
@@ -138,7 +138,13 @@ const Vendor = BusinessPartner.discriminator('Vendor', VendorSchema); // our der
 
 const Employee = BusinessPartner.discriminator('Employee', EmployeeSchema); // our derived model (see discriminator)
 
+Vendor.schema.eachPath((path,schema)=>{
+   let PathType= Vendor.schema.pathType(path);
+    console.log("is",path,PathType);
+})
+
 export {
+    BusinessPartnerSchema,
     CustomerSchema,
     BusinessPartner,
     Customer,

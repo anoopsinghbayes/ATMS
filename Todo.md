@@ -12,7 +12,9 @@
 
 3.  [client with graphql](https://github.com/anoopsinghbayes/ATMS-client)
     >this contains the Apollo Client example to connect to the server
-
+4.  [Notification Service](https://github.com/anoopsinghbayes/NotificationService)
+    >this contains the Services to fire Notification Mail or SMS
+    
 - [ ] Follow [Semantic Versioning](https://semver.org/) thoroughly 
 - [ ] Authentication and Role Management
    - [ ] use [PassprtJS](http://www.passportjs.org) with [JWT](https://jwt.io/)

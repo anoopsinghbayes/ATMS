@@ -1,5 +1,5 @@
 import express from 'express';
-import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
+import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import {GraphQLSchema} from 'graphql'
 import bodyParser from 'body-parser';
 import cors from 'cors';

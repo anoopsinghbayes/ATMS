@@ -16,6 +16,7 @@
     >this contains the Services to fire Notification Mail or SMS
     
 - [ ] Follow [Semantic Versioning](https://semver.org/) thoroughly 
+- [ ] Try converting the serverside code from javascript to typeScript [example](https://blog.risingstack.com/building-a-node-js-app-with-typescript-tutorial/) 
 - [ ] Authentication and Role Management
    - [ ] use [PassprtJS](http://www.passportjs.org) with [JWT](https://jwt.io/)
 - [ ] Node version Management

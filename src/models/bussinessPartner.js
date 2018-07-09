@@ -1,6 +1,5 @@
 import { util } from "util";
 import mongoose, { Schema } from "mongoose";
-import { AddressSchema } from "./address";
 
 const BusinessPartnerOptions = { discriminatorKey: "kind" };
 /**
@@ -16,7 +15,10 @@ var marital_type = {
   values: ["Single", "Married"],
   message: "Invalid Marital type"
 };
-
+var kind = {
+  values: ["Customer", "Vendor", "Employee"],
+  message: "Invalid Kind"
+};
 var job_type = {
   values: ["Job1", "Job2"],
   message: "Invalid job_type"
@@ -27,10 +29,6 @@ var job_type = {
  */
 let BusinessPartnerSchema = new Schema(
   {
-    kind: {
-      type: String,
-      enum: ["Customer", "Vendor", "Employee"]
-    },
     companyName: {
       type: String,
       required: true
@@ -48,37 +46,39 @@ let BusinessPartnerSchema = new Schema(
   BusinessPartnerOptions
 );
 
-const BusinessPartner = mongoose.model(
-  "BusinessPartner",
-  BusinessPartnerSchema
-); // our base model
-let CustomerSchema = new Schema({
-  credit: {
-    limit: { type: Number, min: 0, required: false },
-    period: { type: Number, min: 0, required: false }
+let CustomerSchema = new Schema(
+  {
+    credit: {
+      limit: { type: Number, min: 0, required: false },
+      period: { type: Number, min: 0, required: false }
+    },
+    salesRep: {
+      name: {
+        type: String,
+        trim: true
+      },
+      phL: {
+        type: String
+      },
+      phM: {
+        type: String
+      }
+    }
   },
-  salesRep: {
-    name: {
-      type: String,
-      trim: true
-    },
-    phL: {
-      type: String
-    },
-    phM: {
-      type: String
-    }
-  }
-});
+  BusinessPartnerOptions
+);
 
-var VendorSchema = new Schema({
-  vendorRep: {
-    name: {
-      type: String,
-      trim: true
+var VendorSchema = new Schema(
+  {
+    vendorRep: {
+      name: {
+        type: String,
+        trim: true
+      }
     }
-  }
-});
+  },
+  BusinessPartnerOptions
+);
 
 var EmployeeSchema = new Schema({
   fName: {
@@ -130,22 +130,5 @@ var EmployeeSchema = new Schema({
     type: String
   }
 });
-const Customer = BusinessPartner.discriminator("Customer", CustomerSchema); // our derived model (see discriminator)
 
-const Vendor = BusinessPartner.discriminator("Vendor", VendorSchema); // our derived model (see discriminator)
-
-const Employee = BusinessPartner.discriminator("Employee", EmployeeSchema); // our derived model (see discriminator)
-
-Vendor.schema.eachPath((path, schema) => {
-  let PathType = Vendor.schema.pathType(path);
-  console.log("is", path, PathType);
-});
-
-export {
-  BusinessPartnerSchema,
-  CustomerSchema,
-  BusinessPartner,
-  Customer,
-  Vendor,
-  Employee
-};
+export { BusinessPartnerSchema, CustomerSchema, VendorSchema, EmployeeSchema };

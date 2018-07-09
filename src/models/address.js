@@ -45,6 +45,4 @@ var AddressSchema = new Schema({
   }
 });
 
-let Address = mongoose.model("Address", AddressSchema);
-
-export { AddressSchema, Address };
+export { AddressSchema };

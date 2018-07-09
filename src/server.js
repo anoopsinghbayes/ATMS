@@ -1,4 +1,5 @@
 import express from "express";
+import { schemaComposer } from "graphql-compose";
 import { graphqlExpress, graphiqlExpress } from "apollo-server-express";
 import { GraphQLSchema } from "graphql";
 import bodyParser from "body-parser";
@@ -8,24 +9,24 @@ import { SubscriptionServer } from "subscriptions-transport-ws";
 import { printSchema } from "graphql/utilities/schemaPrinter";
 import mongoose from "mongoose";
 import { tenantGqlSchemas } from "./connection";
-// console.log("schema", tenantGqlSchemas);
-import { subscriptionManager } from "./data/subscriptions";
-import schema from "./models/address.schema";
-
 const GRAPHQL_PORT = 8080;
 const WS_PORT = 8090;
 const graphQLServer = express().use("*", cors());
 const DB_USER_NAME = "admin";
 const DB_PASSWORD = "admin";
+const return_tenant = () => {
+  const ramdom = Math.floor(Math.random() * 2) + 1;
+  console.log("DB name", ramdom);
+  return ramdom;
+};
 graphQLServer.use(
   "/graphql",
   bodyParser.json(),
-  graphqlExpress({
-    schema: tenantGqlSchemas["t1"],
-    context: {
-      db: "db"
-    }
-  })
+  graphqlExpress(req => ({
+    schema: tenantGqlSchemas[`t${return_tenant()}`],
+    graphiql: process.env.NODE_ENV !== "production",
+    pretty: process.env.NODE_ENV !== "production"
+  }))
 );
 graphQLServer.use(
   "/graphiql",
@@ -35,7 +36,7 @@ graphQLServer.use(
 );
 graphQLServer.use("/schema", (req, res) => {
   res.set("Content-Type", "text/plain");
-  res.send(printSchema(tenantGqlSchemas["t1"]));
+  res.send(printSchema(tenantGqlSchemas[`t${return_tenant()}`]));
 });
 
 graphQLServer.listen(GRAPHQL_PORT, () =>
@@ -58,4 +59,4 @@ websocketServer.listen(WS_PORT, () =>
 );
 
 // eslint-disable-next-line
-new SubscriptionServer({ subscriptionManager }, websocketServer);
+// new SubscriptionServer({ subscriptionManager }, websocketServer);
